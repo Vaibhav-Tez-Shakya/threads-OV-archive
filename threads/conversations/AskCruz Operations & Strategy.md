@@ -2,11 +2,12 @@
 
 - Thread ID: ac8fa1fc-dd31-4bd8-a2ce-bf3b13de857e
 - Created: 2026-10-07T15:28:01.787Z
-- Updated: 2026-10-07T15:29:37.349Z
+- Updated: 2026-10-07T15:29:43.393Z
 
 ---
 
 ## User
+
 
 
 
@@ -15,6 +16,7 @@ who is HR of askcruz
 ---
 
 ## Claude
+
 
 
 Based on my memory, **AskCruz doesn't have a dedicated HR person listed**. The team as of Oct 6, 2026 includes:
@@ -34,6 +36,28 @@ Is there a specific HR need? (Recruiting, compensation, onboarding, compliance, 
 
 ## User
 
+
 Create a pdf for this info related to HR
+
+---
+
+## Claude
+
+User requested: Create a PDF for HR info
+
+Craft level selected: Sketch (bare structure)
+
+Created: AskCruz_Team_Roster.pdf
+
+Content: Simple table with 6 team members:
+- Jaskeeart (Frontend/Chat Interface)
+- Ayan (Database & Credentials)
+- Nidhi (Linear Board Management)
+- Sebastian Roa Viertel (SDR, Hired Aug 27)
+- Ron (Implementation & Escalation)
+- Vaibhav Shakya (AI Intern, Hired Aug 24)
+
+Format: Bare structure table with minimal styling
+Status: All team members marked as Active
 
 ---
