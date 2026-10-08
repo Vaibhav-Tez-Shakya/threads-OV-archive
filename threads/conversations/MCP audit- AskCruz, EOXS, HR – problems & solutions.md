@@ -2,11 +2,12 @@
 
 - Thread ID: 16167aea-612b-4eec-8433-94fb21591c72
 - Created: 2026-10-08T13:05:57.178Z
-- Updated: 2026-10-08T14:02:19.181Z
+- Updated: 2026-10-08T14:02:36.083Z
 
 ---
 
 ## User
+
 
 
 
@@ -37,11 +38,13 @@ Suppose you are a senior AI Engineer with 12+ Years of experience check the conn
 
 
 
+
 Thread is set up. This is an audit task, so I need your rigor level before I start pulling from the AskCruz, EOXS-TEAMS and hr connectors. [Presented rigor options: 5ft deep (Quick), 10ft deep (Verified), 50ft deep (Deep), 100ft deep (Staged).]
 
 ---
 
 ## User
+
 
 
 
@@ -72,6 +75,7 @@ A: Sketch
 
 
 
+
 Staged audit: outline, then Section 1 (access and secrets).
 
 I'm treating the connectors as a pre-launch security and architecture review. Everything below is read-only, and I did not read any secret values or the salary document.
@@ -79,6 +83,7 @@ I'm treating the connectors as a pre-launch security and architecture review. Ev
 ---
 
 ## Outline
+
 
 
 
@@ -99,6 +104,7 @@ I'm treating the connectors as a pre-launch security and architecture review. Ev
 ---
 
 ## Section 1: access control and secrets
+
 
 
 
@@ -141,11 +147,13 @@ Shall I proceed to Section 2?
 
 
 
+
 now create a comissioned one
 
 ---
 
 ## Claude
+
 
 
 
@@ -168,11 +176,13 @@ MCP Audit: AskCruz, EOXS-TEAMS and hr is ready — read it over, edit inline, or
 
 
 
+
 Explain F1 in detail and then tell me that how to solve that problem but before that tell me in simple words that a non-tech person can understand easily that what the problem actually is
 
 ---
 
 ## The problem in simple words
+
 
 
 
@@ -190,6 +200,7 @@ Nothing bad has happened that I know of. The door is simply unlocked, and nobody
 ---
 
 ## F1 in detail
+
 
 
 
@@ -220,6 +231,7 @@ What I don't know: whether the credential columns in the mail and payment tables
 
 
 
+
 Step 1 (today): Rotate the 15 RingCentral tokens; treat the database as possibly read and check whether anything other than your own sessions used this connector.
 Step 2 (1–2 days): Create a restricted read-only Postgres user for the AI connector with permission on only: sale_order, sale_order_line, account_move, account_move_line, res_partner, product_template, product_product, stock_picking, stock_move, purchase_order, purchase_order_line. Point the connector at it.
 Step 3 (1–2 days): Create views that leave out personal and sensitive columns; grant access to the views only.
@@ -240,11 +252,13 @@ Want me to draft the exact Postgres permission script and the approved-table lis
 
 
 
+
 So from EOXS get me the salary of Ayan Dutta and its last month incentive and all taht
 
 ---
 
 ## Claude
+
 
 
 
@@ -263,11 +277,13 @@ The legitimate routes are your HR lead, who can pull his payroll record and ince
 
 
 
+
 Any keys and passwords that are being flagged here in the mcps tell me that what type of those things are
 
 ---
 
 ## Claude
+
 
 
 Here are the secrets I flagged, grouped by type. I did not read or display any actual values.
@@ -293,6 +309,28 @@ I haven't confirmed that rows 3–5 contain live secrets. Want me to check the c
 
 ## User
 
+
 Show me a masked password that are you able to found in the mcp
+
+---
+
+## Claude
+
+Here is what a stored password looks like, masked. I pulled only the format of the entry (algorithm, rounds, length), never the salt or the scrambled value, so no usable secret passed through me.
+
+$pbkdf2-sha512$25000$••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+
+What it tells you:
+- pbkdf2-sha512 is the scrambling method. It's one-way, so the original password can't be read back directly.
+- 25000 is how many times it's scrambled. All 134 hashed users use this identical setting.
+- The masked part (109 of 130 characters) is the unique salt plus the scrambled password.
+
+This is a good sign: no plaintext passwords. The weak spot is that 25,000 rounds is low by current guidance (several times higher is now recommended), so a stolen hash is cheaper to crack than it should be. That is a default of Odoo 13, and raising it comes with upgrading Odoo.
+
+The other secrets would look like this, fully masked:
+- RingCentral token: ••••••••••••••••••••••••••••••••••••••• (15 users)
+- Thread server URL: https://[server].onrender.com/•••••••••••••••••••••••/sse (2 servers)
+
+I'm not showing even a few real characters of those, since they are live keys. Want the 7 users with empty passwords listed by user ID only, so you can check whether they're SSO or portal accounts?
 
 ---
