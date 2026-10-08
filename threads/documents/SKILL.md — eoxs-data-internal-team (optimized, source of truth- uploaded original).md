@@ -63,6 +63,8 @@ When triggered, this **overrides the "try `search_wiki` first" guidance in §5, 
 
 ## Quick Tool Reference — 20 Tools
 
+**Find the tool you need fast:**
+
 | Category | Tools | Count |
 |----------|-------|-------|
 | **Correspondence** | `search_emails` · `get_email` · `search_calls` · `list_calls` · `get_call` | 5 |
@@ -146,8 +148,6 @@ If asked to create or change something, say plainly that this connection is read
 
 **eoxs-teams & teams-askcruz:** Live by definition — represents current state of Odoo.
 
-Do not assume a synthesized wiki page is newer than live source data.
-
 ---
 
 ## 5. Tool reference — eoxs-db only
@@ -172,9 +172,9 @@ Do not assume a synthesized wiki page is newer than live source data.
 
 **Purpose:** Full-text search synthesized wiki pages (entities, concepts, analyses, overviews, client summaries). Each result includes citations (raw sources this page cites, with fetch_tool/fetch_identifier to pull the exact record).
 
-**When to use:** **Try this first** for almost any content question — a wiki page's citations resolve entity/topic queries far more reliably than full-text keyword search against raw emails/calls/tasks, which can miss the right thread if it doesn't contain every query word. A synthesized page can answer in one call what would otherwise take several raw searches. Do not skip it by reflex.
+**When to use:** **Try this first** for almost any content question — a wiki page's citations resolve entity/topic queries far more reliably than full-text keyword search against raw emails/calls/tasks, which can miss the right thread if it doesn't contain every query word.
 
-**Fallback:** Only fall back to `search_emails`/`search_calls`/`search_assets`/`search_implementation_tasks` directly when `search_wiki` returns nothing relevant. It covers promoted pages only, so fall through when it comes back thin.
+**Fallback:** Only fall back to `search_emails`/`search_calls`/`search_assets`/`search_implementation_tasks` directly when `search_wiki` returns nothing relevant.
 
 ---
 
@@ -301,7 +301,7 @@ Every tool call costs seconds of latency, and its full result stays in context f
 
 **A client** → `get_client_profile(slug or name)` on eoxs-db. Use `list_clients()` first only if unsure of the slug. Drill into specifics with `get_*` on the ids it returns. If it reports staging pages pending promotion, say that reviewed-but-unpromoted synthesis exists rather than implying nothing has been written.
 
-**A person** → `search_emails(name, account="all")`, then `search_calls(name)` if meetings are relevant. Try individual accounts only if `all` appears to miss something. Contribution questions follow the hardcoded rule above.
+**A person** → `search_emails(name, account="all")`, then `search_calls(name)` if meetings are relevant. Try individual accounts only if `all` appears to miss something.
 
 **An SOP, internal policy, spec, or reference doc** → `search_assets(query)` on eoxs-db first (fast title/body search). If not found, fall back to `search_wiki` in case a page synthesizes the info. Use `get_asset(identifier)` for exact wording and figures.
 
