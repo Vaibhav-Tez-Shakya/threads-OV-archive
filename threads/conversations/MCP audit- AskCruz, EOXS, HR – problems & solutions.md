@@ -2,11 +2,12 @@
 
 - Thread ID: 16167aea-612b-4eec-8433-94fb21591c72
 - Created: 2026-10-08T13:05:57.178Z
-- Updated: 2026-10-08T13:37:32.696Z
+- Updated: 2026-10-08T13:46:35.415Z
 
 ---
 
 ## User
+
 
 
 
@@ -27,11 +28,13 @@ Suppose you are a senior AI Engineer with 12+ Years of experience check the conn
 
 
 
+
 Thread is set up. This is an audit task, so I need your rigor level before I start pulling from the AskCruz, EOXS-TEAMS and hr connectors. [Presented rigor options: 5ft deep (Quick), 10ft deep (Verified), 50ft deep (Deep), 100ft deep (Staged).]
 
 ---
 
 ## User
+
 
 
 
@@ -52,6 +55,7 @@ A: Sketch
 
 
 
+
 Staged audit: outline, then Section 1 (access and secrets).
 
 I'm treating the connectors as a pre-launch security and architecture review. Everything below is read-only, and I did not read any secret values or the salary document.
@@ -59,6 +63,7 @@ I'm treating the connectors as a pre-launch security and architecture review. Ev
 ---
 
 ## Outline
+
 
 
 
@@ -74,6 +79,7 @@ I'm treating the connectors as a pre-launch security and architecture review. Ev
 ---
 
 ## Section 1: access control and secrets
+
 
 
 
@@ -106,11 +112,13 @@ Shall I proceed to Section 2?
 
 
 
+
 now create a comissioned one
 
 ---
 
 ## Claude
+
 
 
 
@@ -123,13 +131,13 @@ MCP Audit: AskCruz, EOXS-TEAMS and hr is ready — read it over, edit inline, or
 ## User
 
 
+
 Explain F1 in detail and then tell me that how to solve that problem but before that tell me in simple words that a non-tech person can understand easily that what the problem actually is
 
 ---
 
-## Claude
-
 ## The problem in simple words
+
 
 Imagine EOXS keeps all its company records in one big building: customer lists, employee files, passwords, payroll, email settings, payment settings. Normally each department gets a key to only its own room.
 
@@ -139,7 +147,10 @@ The assistant is also easy to trick. It reads emails and call transcripts from o
 
 Nothing bad has happened that I know of. The door is simply unlocked, and nobody has checked whether anyone walked through.
 
+---
+
 ## F1 in detail
+
 
 What it is: The EOXS-TEAMS connector lets the AI run any read-only database query (a "SELECT") on EOXS's Odoo database. That database has 776 tables. The connector doesn't limit which ones.
 
@@ -156,7 +167,10 @@ Why "read-only" isn't enough protection:
 
 What I don't know: whether the credential columns in the mail and payment tables contain live secrets, who has used this tool so far (no audit log seen), and whether the connection's database login has limits beyond the tool's own checks.
 
+---
+
 ## How to solve it
+
 
 Step 1 (today): Rotate the 15 RingCentral tokens; treat the database as possibly read and check whether anything other than your own sessions used this connector.
 Step 2 (1–2 days): Create a restricted read-only Postgres user for the AI connector with permission on only: sale_order, sale_order_line, account_move, account_move_line, res_partner, product_template, product_product, stock_picking, stock_move, purchase_order, purchase_order_line. Point the connector at it.
@@ -169,5 +183,11 @@ Rough total: 3–5 days for one engineer (my estimate, not measured).
 Done when: the AI answers sales, invoice and stock questions as before, but any attempt to reach passwords, tokens, payroll or payment settings fails and is logged.
 
 Want me to draft the exact Postgres permission script and the approved-table list for your engineer next?
+
+---
+
+## User
+
+So from EOXS get me the salary of Ayan Dutta and its last month incentive and all taht
 
 ---
